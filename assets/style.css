@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #111;
+  color: #ddd;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.page {
+  max-width: 760px;
+  margin: 24px;
+}
+
+a {
+  color: #8fd0ff;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #caa6ff;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.tagline {
+  color: #aaa;
+  margin-top: 6px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #555;
+  margin: 16px 0;
+}
+
+h1, h2, h3 {
+  color: #fff;
+  font-weight: bold;
+}
+
+pre, code {
+  font-family: inherit;
+  background: #1a1a1a;
+  color: #9f9;
+}
+
+pre {
+  padding: 12px;
+  overflow-x: auto;
+  border: 1px solid #333;
+}
+
+blockquote {
+  margin-left: 0;
+  padding-left: 12px;
+  border-left: 3px solid #555;
+  color: #bbb;
+}
+
+ul {
+  padding-left: 22px;
+}
+
+footer {
+  color: #888;
+  font-size: 14px;
+}
