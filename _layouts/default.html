@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ site.description }}">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="title">[ {{ site.title }} ]</div>
+      <div class="tagline">{{ site.description }}</div>
+      <hr>
+      <nav>
+        <a href="/">home</a> |
+        <a href="/about.html">about</a> |
+        <a href="/links.html">links</a> |
+        <a href="/changelog.html">changelog</a>
+      </nav>
+      <hr>
+    </header>
+
+    <main>
+      {{ content }}
+    </main>
+
+    <footer>
+      <hr>
+      <p>best viewed with a keyboard and low expectations.</p>
+    </footer>
+  </div>
+</body>
+</html>
