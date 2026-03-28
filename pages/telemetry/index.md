@@ -2,6 +2,8 @@
 
 ## SNMP
 
+[usr/share/snmp/mibs/NET-SNMP-MIB.txt](/usr/share/snmp/mibs/NET-SNMP-MIB.txt)
+
 ### net-snmp
 
 ### MIB
@@ -14,3 +16,5 @@
 - [Prometheus SNMP Exporter MIBs](/pages/telemetry/snmp/mib/prometheus-snmp-exporter-mibs.html)
 
 ## Syslog
+
+### rsyslog
