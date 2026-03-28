@@ -4,6 +4,8 @@
 - [links](/pages/links.html)
 - [about](/pages/links.html)
 
+- [telemetry](/pages/telemetry/index.html)
+
 ```c++
 #include <iostream>
 using namespace std;
