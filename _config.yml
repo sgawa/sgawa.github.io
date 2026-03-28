@@ -2,4 +2,10 @@ title: terminal node
 description: theme
 markdown: kramdown
 theme: null
-permalink: /blog/:year/:month/:day/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      permalink: /blog/:year/:month/:day/:title/
