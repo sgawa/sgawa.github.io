@@ -3,7 +3,6 @@
 - [blogs](/blog-list.html)
 - [links](/pages/links.html)
 - [about](/pages/links.html)
-
 - [telemetry](/pages/telemetry/index.html)
 
 ```c++
