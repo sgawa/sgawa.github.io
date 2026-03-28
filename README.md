@@ -2,13 +2,20 @@
 
 - [links](/links.html)
 
-```bash
-## notes
+```c++
+#include <iostream>
+using namespace std;
 
-- shell
-- linux
-- programming
-- text files
-- old hardware
-- quiet web
+int main() {
+    int n;
+    cout << "数字を入力: ";
+    cin >> n;
+
+    if (n % 2 == 0) {
+        cout << n << " は偶数です。" << endl;
+    } else {
+        cout << n << " は奇数です。" << endl;
+    }
+    return 0;
+}
 ```
