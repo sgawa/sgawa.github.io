@@ -1,6 +1,8 @@
 # sgawa.github.io
 
-- [links](/links.html)
+- [blogs](/blog-list.html)
+- [links](/pages/links.html)
+- [about](/pages/links.html)
 
 ```c++
 #include <iostream>
