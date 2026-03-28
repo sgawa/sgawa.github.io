@@ -40,7 +40,7 @@ dpkg -L libsnmp-base | grep mibs
 | [UCD-IPFWACC-MIB.txt](/usr/share/snmp/mibs/UCD-IPFWACC-MIB.txt) | UCD-SNMP系 | IP firewall/accounting 系 |
 | [UCD-SNMP-MIB.txt](/usr/share/snmp/mibs/UCD-SNMP-MIB.txt) | UCD-SNMP系 | 旧 UCD-SNMP 由来の基本 MIB |
 
-### `cat /usr/share/doc/libsnmp-base/README.mibs`
+### cat /usr/share/doc/libsnmp-base/README.mibs
 ```
 About the MIBS distributed with Net-SNMP.
 
@@ -91,7 +91,7 @@ accordance with what the authors intended. All I will promise, is that
 the MIB files can be parsed.
 ```
 
-### (参考) `README.mibs` 和訳
+### (参考) README.mibs 和訳
 
 ```
 Net-SNMPに同梱されているMIBについて。
