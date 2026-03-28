@@ -5,7 +5,15 @@
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{{ site.description }}">
-  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css">
+  <style>
+    body { font-family: monospace; padding: 1rem 2rem; }
+    .page { max-width: 860px; margin: 0 auto; }
+    header, footer { font-family: monospace; }
+    header a, footer a { color: inherit; }
+    nav a { color: inherit; }
+    .markdown-body { padding: 1rem 0; }
+  </style>
 </head>
 <body>
   <div class="page">
@@ -15,6 +23,7 @@
       <hr>
       <nav>
         <a href="/">home</a> |
+        <a href="/blog.html">blog</a> |
         <a href="/about.html">about</a> |
         <a href="/links.html">links</a> |
         <a href="/changelog.html">changelog</a>
@@ -22,7 +31,7 @@
       <hr>
     </header>
 
-    <main>
+    <main class="markdown-body">
       {{ content }}
     </main>
 
