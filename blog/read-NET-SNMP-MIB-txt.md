@@ -1,34 +1,34 @@
-# `NET-SNMP-MIB.txt` を読む
+# NET-SNMP-MIB.txt を読む
 
 2025/10/28 WED
 
-##  `lmSensorsMIB`
+##  lmSensorsMIB
 
 このファイルで確認できる内容は、`lmSensorsMIB` という MIB モジュールの定義です。Linux 系のセンサー情報を SNMP で参照するための構造が、温度・ファン・電圧・その他、という単位で整理されています。  
 
 ### 1. 冒頭コメントと import
 
-> ```text
-> LM-SENSORS-MIB DEFINITIONS ::= BEGIN
->
-> --
-> -- Derived from the original VEST-INTERNETT-MIB. Open issues:
-> --
-> -- (a) where to register this MIB?
-> -- (b) use not-accessible for diskIOIndex?
-> --
->
->
-> IMPORTS
->     MODULE-IDENTITY, OBJECT-TYPE, Integer32, Gauge32
->         FROM SNMPv2-SMI
->     DisplayString
->         FROM SNMPv2-TC
->     ucdExperimental
->         FROM UCD-SNMP-MIB;
-> ```
->
->
+```text
+LM-SENSORS-MIB DEFINITIONS ::= BEGIN
+
+--
+-- Derived from the original VEST-INTERNETT-MIB. Open issues:
+--
+-- (a) where to register this MIB?
+-- (b) use not-accessible for diskIOIndex?
+--
+
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32, Gauge32
+        FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC
+    ucdExperimental
+        FROM UCD-SNMP-MIB;
+```
+
+
 
 ここでは、MIB モジュールの開始宣言と、必要な型・識別子の import が書かれています。
 コメントには、この MIB が `VEST-INTERNETT-MIB` を元にしていること、また登録先などに未解決事項が残っていることが記されています。完成済みの厳密な標準 MIB というより、既存実装を引き継いだ実務寄りの MIB であることが読み取れます。
@@ -36,24 +36,24 @@
 
 ### 2. モジュール識別情報
 
-> ```text
-> lmSensorsMIB MODULE-IDENTITY
->     LAST-UPDATED "200011050000Z"
->     ORGANIZATION "AdamsNames Ltd"
->     CONTACT-INFO    
->         "Primary Contact: M J Oldfield
->          email:     m@mail.tc"
->     DESCRIPTION
->         "This MIB module defines objects for lm_sensor derived data."
->     REVISION     "200011050000Z"
->     DESCRIPTION
->         "Derived from DISKIO-MIB ex UCD."
->     ::= { lmSensors 1 }
->
-> lmSensors      OBJECT IDENTIFIER ::= { ucdExperimental 16 }
-> ```
->
->
+```text
+lmSensorsMIB MODULE-IDENTITY
+    LAST-UPDATED "200011050000Z"
+    ORGANIZATION "AdamsNames Ltd"
+    CONTACT-INFO    
+        "Primary Contact: M J Oldfield
+         email:     m@mail.tc"
+    DESCRIPTION
+        "This MIB module defines objects for lm_sensor derived data."
+    REVISION     "200011050000Z"
+    DESCRIPTION
+        "Derived from DISKIO-MIB ex UCD."
+    ::= { lmSensors 1 }
+
+lmSensors      OBJECT IDENTIFIER ::= { ucdExperimental 16 }
+```
+
+
 
 この部分では MIB モジュールのメタ情報を定義しています。
 更新日時、組織名、連絡先、説明、改訂履歴が書かれており、この MIB が `lm_sensor` 由来のデータを扱うこと、さらに UCD 系の `DISKIO-MIB` から派生していることが示されています。
@@ -77,32 +77,32 @@ Companies House では Martin John Oldfield が同社の director だったこ�
 
 ### 3. 温度センサーテーブル
 
-> ```text
-> lmTempSensorsTable OBJECT-TYPE
->     SYNTAX      SEQUENCE OF LMTempSensorsEntry
->     MAX-ACCESS  not-accessible
->     STATUS      current
->     DESCRIPTION
->         "Table of temperature sensors and their values."
->     ::= { lmSensors 2 }
->
-> lmTempSensorsEntry OBJECT-TYPE
->     SYNTAX      LMTempSensorsEntry
->     MAX-ACCESS  not-accessible
->     STATUS      current
->     DESCRIPTION
->         "An entry containing a device and its statistics."
->     INDEX       { lmTempSensorsIndex }
->     ::= { lmTempSensorsTable 1 }
->
-> LMTempSensorsEntry ::= SEQUENCE {
->     lmTempSensorsIndex    Integer32,
->     lmTempSensorsDevice   DisplayString,
->     lmTempSensorsValue    Gauge32
-> }
-> ```
->
->
+```text
+lmTempSensorsTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF LMTempSensorsEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "Table of temperature sensors and their values."
+    ::= { lmSensors 2 }
+
+lmTempSensorsEntry OBJECT-TYPE
+    SYNTAX      LMTempSensorsEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "An entry containing a device and its statistics."
+    INDEX       { lmTempSensorsIndex }
+    ::= { lmTempSensorsTable 1 }
+
+LMTempSensorsEntry ::= SEQUENCE {
+    lmTempSensorsIndex    Integer32,
+    lmTempSensorsDevice   DisplayString,
+    lmTempSensorsValue    Gauge32
+}
+```
+
+
 
 ここでは温度センサー用のテーブルを定義しています。
 `lmTempSensorsTable` は温度センサーの一覧テーブル、`lmTempSensorsEntry` はその 1 行分の構造です。
@@ -116,33 +116,33 @@ Companies House では Martin John Oldfield が同社の director だったこ�
 
 ### 4. 温度センサー各列
 
-> ```text
-> lmTempSensorsIndex OBJECT-TYPE
->     SYNTAX      Integer32 (0..65535)
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "Reference index for each observed device."
->     ::= { lmTempSensorsEntry 1 }
->
-> lmTempSensorsDevice OBJECT-TYPE
->     SYNTAX      DisplayString
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "The name of the temperature sensor we are reading."
->     ::= { lmTempSensorsEntry 2 }
->
-> lmTempSensorsValue OBJECT-TYPE
->     SYNTAX      Gauge32
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "The temperature of this sensor in mC."
->     ::= { lmTempSensorsEntry 3 }
-> ```
->
->
+```text
+lmTempSensorsIndex OBJECT-TYPE
+    SYNTAX      Integer32 (0..65535)
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Reference index for each observed device."
+    ::= { lmTempSensorsEntry 1 }
+
+lmTempSensorsDevice OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The name of the temperature sensor we are reading."
+    ::= { lmTempSensorsEntry 2 }
+
+lmTempSensorsValue OBJECT-TYPE
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The temperature of this sensor in mC."
+    ::= { lmTempSensorsEntry 3 }
+```
+
+
 
 ここでは温度テーブルの各列の意味が定義されています。
 `lmTempSensorsIndex` は行識別用の番号、`lmTempSensorsDevice` はセンサー名、`lmTempSensorsValue` はセンサー値です。
@@ -151,32 +151,32 @@ Companies House では Martin John Oldfield が同社の director だったこ�
 
 ### 5. ファンセンサーテーブル
 
-> ```text
-> lmFanSensorsTable OBJECT-TYPE
->     SYNTAX      SEQUENCE OF LMFanSensorsEntry
->     MAX-ACCESS  not-accessible
->     STATUS      current
->     DESCRIPTION
->         "Table of fan sensors and their values."
->     ::= { lmSensors 3 }
->
-> lmFanSensorsEntry OBJECT-TYPE
->     SYNTAX      LMFanSensorsEntry
->     MAX-ACCESS  not-accessible
->     STATUS      current
->     DESCRIPTION
->         "An entry containing a device and its statistics."
->     INDEX       { lmFanSensorsIndex }
->     ::= { lmFanSensorsTable 1 }
->
-> LMFanSensorsEntry ::= SEQUENCE {
->     lmFanSensorsIndex    Integer32,
->     lmFanSensorsDevice   DisplayString,
->     lmFanSensorsValue    Gauge32
-> }
-> ```
->
->
+```text
+lmFanSensorsTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF LMFanSensorsEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "Table of fan sensors and their values."
+    ::= { lmSensors 3 }
+
+lmFanSensorsEntry OBJECT-TYPE
+    SYNTAX      LMFanSensorsEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "An entry containing a device and its statistics."
+    INDEX       { lmFanSensorsIndex }
+    ::= { lmFanSensorsTable 1 }
+
+LMFanSensorsEntry ::= SEQUENCE {
+    lmFanSensorsIndex    Integer32,
+    lmFanSensorsDevice   DisplayString,
+    lmFanSensorsValue    Gauge32
+}
+```
+
+
 
 この部分はファンセンサー用のテーブルです。
 構造は温度センサーのテーブルと同じで、インデックス、デバイス名、値の 3 列からなります。
@@ -184,33 +184,33 @@ Companies House では Martin John Oldfield が同社の director だったこ�
 
 ### 6. ファンセンサー各列
 
-> ```text
-> lmFanSensorsIndex OBJECT-TYPE
->     SYNTAX      Integer32 (0..65535)
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "Reference index for each observed device."
->     ::= { lmFanSensorsEntry 1 }
->
-> lmFanSensorsDevice OBJECT-TYPE
->     SYNTAX      DisplayString
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "The name of the fan sensor we are reading."
->     ::= { lmFanSensorsEntry 2 }
->
-> lmFanSensorsValue OBJECT-TYPE
->     SYNTAX      Gauge32
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "The rotation speed of the fan in RPM."
->     ::= { lmFanSensorsEntry 3 }
-> ```
->
->
+```text
+lmFanSensorsIndex OBJECT-TYPE
+    SYNTAX      Integer32 (0..65535)
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Reference index for each observed device."
+    ::= { lmFanSensorsEntry 1 }
+
+lmFanSensorsDevice OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The name of the fan sensor we are reading."
+    ::= { lmFanSensorsEntry 2 }
+
+lmFanSensorsValue OBJECT-TYPE
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The rotation speed of the fan in RPM."
+    ::= { lmFanSensorsEntry 3 }
+```
+
+
 
 ここではファンテーブルの列定義が行われています。
 `lmFanSensorsDevice` はファン名、`lmFanSensorsValue` はファンの回転数で、説明文にある通り単位は RPM です。
@@ -218,32 +218,32 @@ Companies House では Martin John Oldfield が同社の director だったこ�
 
 ### 7. 電圧センサーテーブル
 
-> ```text
-> lmVoltSensorsTable OBJECT-TYPE
->     SYNTAX      SEQUENCE OF LMVoltSensorsEntry
->     MAX-ACCESS  not-accessible
->     STATUS      current
->     DESCRIPTION
->         "Table of voltage sensors and their values."
->     ::= { lmSensors 4 }
->
-> lmVoltSensorsEntry OBJECT-TYPE
->     SYNTAX      LMVoltSensorsEntry
->     MAX-ACCESS  not-accessible
->     STATUS      current
->     DESCRIPTION
->         "An entry containing a device and its statistics."
->     INDEX       { lmVoltSensorsIndex }
->     ::= { lmVoltSensorsTable 1 }
->
-> LMVoltSensorsEntry ::= SEQUENCE {
->     lmVoltSensorsIndex    Integer32,
->     lmVoltSensorsDevice   DisplayString,
->     lmVoltSensorsValue    Gauge32
-> }
-> ```
->
->
+```text
+lmVoltSensorsTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF LMVoltSensorsEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "Table of voltage sensors and their values."
+    ::= { lmSensors 4 }
+
+lmVoltSensorsEntry OBJECT-TYPE
+    SYNTAX      LMVoltSensorsEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "An entry containing a device and its statistics."
+    INDEX       { lmVoltSensorsIndex }
+    ::= { lmVoltSensorsTable 1 }
+
+LMVoltSensorsEntry ::= SEQUENCE {
+    lmVoltSensorsIndex    Integer32,
+    lmVoltSensorsDevice   DisplayString,
+    lmVoltSensorsValue    Gauge32
+}
+```
+
+
 
 この部分は電圧センサー用のテーブルです。
 やはり設計は同型で、センサー種別だけが変わっています。
@@ -251,33 +251,33 @@ OID は `lmSensors 4` です。温度、ファン、電圧という監視でよ�
 
 ### 8. 電圧センサー各列
 
-> ```text
-> lmVoltSensorsIndex OBJECT-TYPE
->     SYNTAX      Integer32 (0..65535)
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "Reference index for each observed device."
->     ::= { lmVoltSensorsEntry 1 }
->
-> lmVoltSensorsDevice OBJECT-TYPE
->     SYNTAX      DisplayString
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "The name of the device we are reading."
->     ::= { lmVoltSensorsEntry 2 }
->
-> lmVoltSensorsValue OBJECT-TYPE
->     SYNTAX      Gauge32
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "The voltage in mV."
->     ::= { lmVoltSensorsEntry 3 }
-> ```
->
->
+```text
+lmVoltSensorsIndex OBJECT-TYPE
+    SYNTAX      Integer32 (0..65535)
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Reference index for each observed device."
+    ::= { lmVoltSensorsEntry 1 }
+
+lmVoltSensorsDevice OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The name of the device we are reading."
+    ::= { lmVoltSensorsEntry 2 }
+
+lmVoltSensorsValue OBJECT-TYPE
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The voltage in mV."
+    ::= { lmVoltSensorsEntry 3 }
+```
+
+
 
 ここでは電圧テーブルの各列を定義しています。
 `lmVoltSensorsValue` の説明は `"The voltage in mV."` なので、単位はミリボルトです。
@@ -285,32 +285,32 @@ OID は `lmSensors 4` です。温度、ファン、電圧という監視でよ�
 
 ### 9. その他センサーテーブル
 
-> ```text
-> lmMiscSensorsTable OBJECT-TYPE
->     SYNTAX      SEQUENCE OF LMMiscSensorsEntry
->     MAX-ACCESS  not-accessible
->     STATUS      current
->     DESCRIPTION
->         "Table of miscellaneous sensor devices and their values."
->     ::= { lmSensors 5 }
->
-> lmMiscSensorsEntry OBJECT-TYPE
->     SYNTAX      LMMiscSensorsEntry
->     MAX-ACCESS  not-accessible
->     STATUS      current
->     DESCRIPTION
->         "An entry containing a device and its statistics."
->     INDEX       { lmMiscSensorsIndex }
->     ::= { lmMiscSensorsTable 1 }
->
-> LMMiscSensorsEntry ::= SEQUENCE {
->     lmMiscSensorsIndex    Integer32,
->     lmMiscSensorsDevice   DisplayString,
->     lmMiscSensorsValue    Gauge32
-> }
-> ```
->
->
+```text
+lmMiscSensorsTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF LMMiscSensorsEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "Table of miscellaneous sensor devices and their values."
+    ::= { lmSensors 5 }
+
+lmMiscSensorsEntry OBJECT-TYPE
+    SYNTAX      LMMiscSensorsEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+        "An entry containing a device and its statistics."
+    INDEX       { lmMiscSensorsIndex }
+    ::= { lmMiscSensorsTable 1 }
+
+LMMiscSensorsEntry ::= SEQUENCE {
+    lmMiscSensorsIndex    Integer32,
+    lmMiscSensorsDevice   DisplayString,
+    lmMiscSensorsValue    Gauge32
+}
+```
+
+
 
 ここでは「その他」のセンサー用テーブルを定義しています。
 温度、ファン、電圧のいずれにも当てはまらないセンサー値を収めるための汎用的な受け皿です。
@@ -318,36 +318,34 @@ OID は `lmSensors 4` です。温度、ファン、電圧という監視でよ�
 
 ### 10. その他センサー各列
 
-> ```text
-> lmMiscSensorsIndex OBJECT-TYPE
->     SYNTAX      Integer32 (0..65535)
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "Reference index for each observed device."
->     ::= { lmMiscSensorsEntry 1 }
->
-> lmMiscSensorsDevice OBJECT-TYPE
->     SYNTAX      DisplayString
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "The name of the device we are reading."
->     ::= { lmMiscSensorsEntry 2 }
->
-> lmMiscSensorsValue OBJECT-TYPE
->     SYNTAX      Gauge32
->     MAX-ACCESS  read-only
->     STATUS      current
->     DESCRIPTION
->         "The value of this sensor."
->     ::= { lmMiscSensorsEntry 3 }
->
->
-> END
-> ```
->
->
+```text
+lmMiscSensorsIndex OBJECT-TYPE
+    SYNTAX      Integer32 (0..65535)
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "Reference index for each observed device."
+    ::= { lmMiscSensorsEntry 1 }
+
+lmMiscSensorsDevice OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The name of the device we are reading."
+    ::= { lmMiscSensorsEntry 2 }
+
+lmMiscSensorsValue OBJECT-TYPE
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+        "The value of this sensor."
+    ::= { lmMiscSensorsEntry 3 }
+
+
+END
+```
 
 ここではその他センサーテーブルの列定義と、モジュール終端が書かれています。
 `lmMiscSensorsValue` の説明は `"The value of this sensor."` とだけあり、単位は固定されていません。
