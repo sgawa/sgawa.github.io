@@ -1,5 +1,7 @@
 # Furukawa F70 の SNMP WALK / MIB 導入手順まとめ
 
+![IMG_2533](https://github.com/user-attachments/assets/28d2d9a1-80b8-4a11-9adb-86f1a1dadf4c)
+
 ## 1. 前提
 
 対象機器:
